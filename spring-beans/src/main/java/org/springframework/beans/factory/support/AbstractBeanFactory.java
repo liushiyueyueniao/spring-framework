@@ -234,6 +234,11 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * not for actual use
 	 * @return an instance of the bean
 	 * @throws BeansException if the bean could not be created
+	 *
+	 *
+	 * TODO 真正的创建Bean // Guarantee initialization of beans that the current bean depends on. 302行  递归创建当前bean依赖的bean
+	 *
+	 *
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
