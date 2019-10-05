@@ -116,6 +116,14 @@ public final class SpringFactoriesLoader {
 	 * {@code null} to use the default
 	 * @throws IllegalArgumentException if an error occurs while loading factory names
 	 * @see #loadFactories
+	 *
+	 *
+	 * 从当前项目的类路径中获取所有 META-INF/spring.factories 这个文件下的信息。
+	 *
+	 * 将上面获取到的信息封装成一个 Map 返回。
+	 *
+	 * 从返回的 Map 中通过刚才传入的 EnableAutoConfiguration.class 参数，获取该 key 下的所有值。
+	 *
 	 */
 	public static List<String> loadFactoryNames(Class<?> factoryClass, @Nullable ClassLoader classLoader) {
 		String factoryClassName = factoryClass.getName();
@@ -129,10 +137,12 @@ public final class SpringFactoriesLoader {
 		}
 
 		try {
+			//搜索全部classpath 下的 META-INF/spring.factories  包括 starter的  本身的spring原生的
 			Enumeration<URL> urls = (classLoader != null ?
 					classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :
 					ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));
 			result = new LinkedMultiValueMap<>();
+			// 遍历 整个 urls
 			while (urls.hasMoreElements()) {
 				URL url = urls.nextElement();
 				UrlResource resource = new UrlResource(url);
