@@ -127,9 +127,10 @@ public final class SpringFactoriesLoader {
 	 */
 	public static List<String> loadFactoryNames(Class<?> factoryClass, @Nullable ClassLoader classLoader) {
 		String factoryClassName = factoryClass.getName();
+		//loadSpringFactories 返回的map结果 用 factoryClassName  去筛选  放入list返回
 		return loadSpringFactories(classLoader).getOrDefault(factoryClassName, Collections.emptyList());
 	}
-
+	// 都是以classLoader 去加载的  返回所有的
 	private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoader classLoader) {
 		MultiValueMap<String, String> result = cache.get(classLoader);
 		if (result != null) {
@@ -144,9 +145,11 @@ public final class SpringFactoriesLoader {
 			result = new LinkedMultiValueMap<>();
 			// 遍历 整个 urls
 			while (urls.hasMoreElements()) {
+				// 每一个URL对应着一个spring.factories
 				URL url = urls.nextElement();
 				UrlResource resource = new UrlResource(url);
 				Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+				// 每一个spring.factories有多组Key Value 值  遍历放入
 				for (Map.Entry<?, ?> entry : properties.entrySet()) {
 					String factoryClassName = ((String) entry.getKey()).trim();
 					for (String factoryName : StringUtils.commaDelimitedListToStringArray((String) entry.getValue())) {
