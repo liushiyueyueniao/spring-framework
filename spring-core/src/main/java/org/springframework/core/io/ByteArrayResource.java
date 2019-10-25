@@ -33,6 +33,9 @@ import org.springframework.util.Assert;
  * Particularly useful for creating mail attachments from local content,
  * where JavaMail needs to be able to read the stream multiple times.
  *
+ *
+ * 加载 内存资源
+ *
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @since 1.2.3

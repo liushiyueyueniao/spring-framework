@@ -31,6 +31,8 @@ import java.io.InputStream;
  * This makes this interface useful as an abstract content source for mail
  * attachments, for example.
  *
+ * InputStreamSource封装任何能返回InputStream的类，比如File、Classpath下的资源和Byte Array等。它只有一个方法定义：getInputStream()，该方法返回一个新的InputStream对象。
+ *
  * @author Juergen Hoeller
  * @since 20.01.2004
  * @see java.io.InputStream

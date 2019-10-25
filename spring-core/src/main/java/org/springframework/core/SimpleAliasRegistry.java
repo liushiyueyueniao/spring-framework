@@ -35,6 +35,8 @@ import org.springframework.util.StringValueResolver;
  * {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
  * implementations.
  *
+ * 主要使用map作为alias的缓存，并对接口AliasRegistry进行实现
+ *
  * @author Juergen Hoeller
  * @since 2.5.2
  */
@@ -46,12 +48,25 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	/** Map from alias to canonical name. */
 	private final Map<String, String> aliasMap = new ConcurrentHashMap<>(16);
 
+	/**
+	 * （1）beanName与alias相同情况处理。若alias和beanName名称相同则不需要处理并删除原有的alias。
+	 *
+	 * （2）alias覆盖处理。若aliasName已经使用并已经指向了另一beanName则需要用户的设置进行处理。
+	 *
+	 * （3）alias循环检查。当A -> B存在时，若再次出现 A -> C -> B时候则会抛出异常。
+	 *
+	 * （4）注册alias。
+	 *
+	 * @param name
+	 * @param alias
+	 */
 
 	@Override
 	public void registerAlias(String name, String alias) {
 		Assert.hasText(name, "'name' must not be empty");
 		Assert.hasText(alias, "'alias' must not be empty");
 		synchronized (this.aliasMap) {
+			// 如果beanName与alias相同的话，不记录alias，并删除对应的alias
 			if (alias.equals(name)) {
 				this.aliasMap.remove(alias);
 				if (logger.isDebugEnabled()) {
@@ -59,6 +74,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 				}
 			}
 			else {
+				// 如果alias不允许被覆盖则抛出异常
 				String registeredName = this.aliasMap.get(alias);
 				if (registeredName != null) {
 					if (registeredName.equals(name)) {
@@ -74,6 +90,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 								registeredName + "' with new target name '" + name + "'");
 					}
 				}
+				// 当A -> B存在时，若再次出现 A -> C -> B时候则会抛出异常
 				checkForAliasCircle(name, alias);
 				this.aliasMap.put(alias, name);
 				if (logger.isTraceEnabled()) {

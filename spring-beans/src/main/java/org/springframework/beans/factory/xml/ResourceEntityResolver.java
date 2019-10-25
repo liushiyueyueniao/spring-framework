@@ -50,6 +50,12 @@ import org.springframework.lang.Nullable;
  * @since 31.07.2003
  * @see org.springframework.core.io.ResourceLoader
  * @see org.springframework.context.ApplicationContext
+ *
+ * 如果SAX应用程序需要实现自定义处理外部实体，则必须实现此接口并使用setEntityResolver方法向SAX驱动器注册一个实例。
+ * 也就是说，对于解析一个XML，SAX首先读取该XML文档上的声明，根据声明去寻找相应的DTD定义，以便对文档进行一个验证。
+ * 默认的寻找规则，即通过网络（实现上就是声明的DTD的URL地址）来下载相应的DTD声明，并进行认证。
+ * 下载的过程漫长，而且当网络中断或不可用的时候，这里会报错，就是因为相应的DTD声明没有被找到的原因。
+ *
  */
 public class ResourceEntityResolver extends DelegatingEntityResolver {
 

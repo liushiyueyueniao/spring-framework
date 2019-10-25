@@ -34,6 +34,11 @@ import org.springframework.lang.Nullable;
  * physical form, but a URL or File handle can just be returned for
  * certain resources. The actual behavior is implementation-specific.
  *
+ * Resource接口抽象了所有Spring内部使用到的底层资源：File、URL、Classpath等。首先，
+ * 它定义了3个判断当前资源状态的方法：存在性（exists）、可读性（isReadable）、是否处于打开状态（isOpen）。
+ * 另外，Resource接口还提供了不同资源到URL、URI、File类型的转换，以及获取lastModified属性、文件名（不带文件信息的文件名，getFilename()）的方法。
+ * 为了便于操作，Resource还提供了基于当前资源创建一个相对资源的方法：createRelative()。
+ * 在错误处理中需要详细地打印出错的资源文件，因而Resource还提供了getDescription()方法用于在错误处理中的打印信息。
  * @author Juergen Hoeller
  * @since 28.12.2003
  * @see #getInputStream()
@@ -48,6 +53,8 @@ import org.springframework.lang.Nullable;
  * @see ClassPathResource
  * @see ByteArrayResource
  * @see InputStreamResource
+ *
+ * 文件（FileSystemResource）、Classpath资源（ClasspathResource）、URL资源（URLResource）、InputStream资源（InputStreamResource）、Byte数组（ByteArrayResource）等
  */
 public interface Resource extends InputStreamSource {
 

@@ -49,6 +49,8 @@ import org.springframework.lang.Nullable;
  * and {@code containsBeanDefinition}, the methods in this interface
  * are not designed for frequent invocation. Implementations may be slow.
  *
+ * 根据各种条件获取bean的配置清单
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @since 16 April 2001
@@ -65,6 +67,8 @@ public interface ListableBeanFactory extends BeanFactory {
 	 * @param beanName the name of the bean to look for
 	 * @return if this bean factory contains a bean definition with the given name
 	 * @see #containsBean
+	 *
+	 * this beanFactory 是否包含 beanDefinition
 	 */
 	boolean containsBeanDefinition(String beanName);
 
@@ -74,6 +78,8 @@ public interface ListableBeanFactory extends BeanFactory {
 	 * and ignores any singleton beans that have been registered by
 	 * other means than bean definitions.
 	 * @return the number of beans defined in the factory
+	 *
+	 * 一共定义多少bean
 	 */
 	int getBeanDefinitionCount();
 
@@ -84,6 +90,8 @@ public interface ListableBeanFactory extends BeanFactory {
 	 * other means than bean definitions.
 	 * @return the names of all beans defined in this factory,
 	 * or an empty array if none defined
+	 *
+	 * 获取所有beanNames
 	 */
 	String[] getBeanDefinitionNames();
 
@@ -113,6 +121,8 @@ public interface ListableBeanFactory extends BeanFactory {
 	 * @see #isTypeMatch(String, ResolvableType)
 	 * @see FactoryBean#getObjectType
 	 * @see BeanFactoryUtils#beanNamesForTypeIncludingAncestors(ListableBeanFactory, ResolvableType)
+	 *
+	 * 根据类型获取全部的定义名字
 	 */
 	String[] getBeanNamesForType(ResolvableType type);
 

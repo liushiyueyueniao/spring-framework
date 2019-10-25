@@ -58,9 +58,11 @@ public abstract class BeanDefinitionReaderUtils {
 			@Nullable String parentName, @Nullable String className, @Nullable ClassLoader classLoader) throws ClassNotFoundException {
 
 		GenericBeanDefinition bd = new GenericBeanDefinition();
+		// parentName可能为空
 		bd.setParentName(parentName);
 		if (className != null) {
 			if (classLoader != null) {
+				// 如果classLoader不为空，则使用以传入的classLoader加载类对象，否则只是记录className
 				bd.setBeanClass(ClassUtils.forName(className, classLoader));
 			}
 			else {
@@ -156,19 +158,32 @@ public abstract class BeanDefinitionReaderUtils {
 	 * @param definitionHolder the bean definition including name and aliases
 	 * @param registry the bean factory to register with
 	 * @throws BeanDefinitionStoreException if registration failed
+	 *
+	 * 更具beandefinition 来注册（Register）bean instance 生成实例
+	 *
+	 * 预计：针对一个标签  生成一个bean
+	 *
+	 * 解析的beanDefinition都会被注册到BeanDefinitionRegistry（也就是 xmlBeanFactory 的父类实例 DefaultListableBeanFactory 的 beanDefinitionNames ）类型的实例中，
+	 * 而对于beanDefinition的注册分成了两部分：通过beanName的注册以及通过别名的注册。
+	 *
+	 * TODO bean 运行完这个方法，注册功能到此结束
+	 *
 	 */
 	public static void registerBeanDefinition(
 			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)
 			throws BeanDefinitionStoreException {
 
 		// Register bean definition under primary name.
+		// 使用beanName做唯一标识注册
 		String beanName = definitionHolder.getBeanName();
 		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());
 
 		// Register aliases for bean name, if any.
+		// 注册所有的别名
 		String[] aliases = definitionHolder.getAliases();
 		if (aliases != null) {
 			for (String alias : aliases) {
+				// SimpleAliasRegistry registerAlias  都是DefaultListableBeanFactory 及其父类的方法
 				registry.registerAlias(beanName, alias);
 			}
 		}

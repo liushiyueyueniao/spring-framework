@@ -35,6 +35,10 @@ import org.springframework.util.ObjectUtils;
  * <p>Used as an argument for operations that support reading content with
  * a specific encoding, typically via a {@code java.io.Reader}.
  *
+ * 一个有编码（encoding）的InputStreamReader。当构造好encodeResource对象后，再次转入了可复用方法loadBeanDefinitions(new EncodedResource(resource))。
+ *
+ * 大致推断这个类主要是用于对资源文件的编码进行处理。其中的主要逻辑体现在getReader()方法中，当设置了编码属性的时候Spring会使用相应的编码作为输入流的编码。
+ *
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @since 1.2.6
@@ -134,6 +138,9 @@ public class EncodedResource implements InputStreamSource {
 	 * @throws IOException if opening the Reader failed
 	 * @see #requiresReader()
 	 * @see #getInputStream()
+	 *
+	 * 于对资源文件的编码进行处理。其中的主要逻辑体现在getReader()方法中，当设置了编码属性的时候Spring会使用相应的编码作为输入流的编码。
+	 *
 	 */
 	public Reader getReader() throws IOException {
 		if (this.charset != null) {

@@ -34,6 +34,8 @@ import org.springframework.util.Assert;
  * keep the resource descriptor somewhere, or if you need to read from a stream
  * multiple times.
  *
+ * 加载inputstream资源
+ *
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @since 28.12.2003

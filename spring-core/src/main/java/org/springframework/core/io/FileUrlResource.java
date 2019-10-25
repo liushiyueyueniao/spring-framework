@@ -40,6 +40,8 @@ import org.springframework.util.ResourceUtils;
  * <p>Alternatively, for direct construction from a {@link java.io.File} handle
  * or NIO {@link java.nio.file.Path}, consider using {@link FileSystemResource}.
  *
+ * 加载文件的url的资源
+ *
  * @author Juergen Hoeller
  * @since 5.0.2
  */

@@ -42,6 +42,8 @@ import org.springframework.util.StringValueResolver;
  * needs. This extended interface is just meant to allow for framework-internal
  * plug'n'play and for special access to bean factory configuration methods.
  *
+ * 提供配置Factory的各种方法
+ *
  * @author Juergen Hoeller
  * @since 03.11.2003
  * @see org.springframework.beans.factory.BeanFactory
@@ -136,6 +138,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 * An ApplicationContext will typically set a standard expression strategy
 	 * here, supporting "#{...}" expressions in a Unified EL compatible style.
 	 * @since 3.0
+	 *
+	 * 表达式解析 和配置文件解析
 	 */
 	void setBeanExpressionResolver(@Nullable BeanExpressionResolver resolver);
 
@@ -161,6 +165,9 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	ConversionService getConversionService();
 
 	/**
+	 *
+	 * PropertyEditorRegistrar
+	 *
 	 * Add a PropertyEditorRegistrar to be applied to all bean creation processes.
 	 * <p>Such a registrar creates new PropertyEditor instances and registers them
 	 * on the given registry, fresh for each bean creation attempt. This avoids
@@ -213,6 +220,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 * Add a String resolver for embedded values such as annotation attributes.
 	 * @param valueResolver the String resolver to apply to embedded values
 	 * @since 3.0
+	 *
+	 * 嵌入式的 ValueResolver
 	 */
 	void addEmbeddedValueResolver(StringValueResolver valueResolver);
 

@@ -29,6 +29,13 @@ import org.springframework.beans.factory.BeanDefinitionStoreException;
  * {@code registerBeanDefinitions} method &mdash; for example, global
  * settings that are defined for all bean definitions in the document.
  *
+ *
+ * // 加载及注册bean   根据Document生成BeanDefinition的Reader
+ *
+ * 这个就是XmlBeanDefinitionReader 的委托类 BeanDefinitionDocumentReader
+ *
+ * 实现从document 到 BeanDefinition 的转换
+ *
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @since 18.12.2003
@@ -43,6 +50,8 @@ public interface BeanDefinitionDocumentReader {
 	 * @param readerContext the current context of the reader
 	 * (includes the target registry and the resource being parsed)
 	 * @throws BeanDefinitionStoreException in case of parsing errors
+	 *
+	 * // 加载及注册bean
 	 */
 	void registerBeanDefinitions(Document doc, XmlReaderContext readerContext)
 			throws BeanDefinitionStoreException;

@@ -26,6 +26,8 @@ import org.springframework.lang.Nullable;
  * factories that allow setting the parent in a configurable
  * fashion can be found in the ConfigurableBeanFactory interface.
  *
+ * 继承BeanFactory，也就是在BeanFactory定义的功能的基础上增加了对parentFactory的支持
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @since 07.07.2003
@@ -35,11 +37,16 @@ public interface HierarchicalBeanFactory extends BeanFactory {
 
 	/**
 	 * Return the parent bean factory, or {@code null} if there is none.
+	 *
+	 * 获取父beanFacroty
 	 */
 	@Nullable
 	BeanFactory getParentBeanFactory();
 
 	/**
+	 *
+	 * 本地是否包含 这个name 对应的bean
+	 *
 	 * Return whether the local bean factory contains a bean of the given name,
 	 * ignoring beans defined in ancestor contexts.
 	 * <p>This is an alternative to {@code containsBean}, ignoring a bean
